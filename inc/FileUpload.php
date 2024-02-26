@@ -37,7 +37,6 @@ class FileUpload {
             // 3.2) If fileType matched to the allowed file type and file size is less than 5MB then upload
             if ( in_array( $this->files['type'][$i], $this->allowedFileType ) && $this->files['size'][$i] < 5 * 1024 * 1024 ) {
                 move_uploaded_file( $this->files['tmp_name'][$i], $this->path . DIRECTORY_SEPARATOR . $fileName );
-                header( 'location: ./' );
             } else {
                 $errorMsg = "You have only allowed <code class='font-montserrat font-semibold'>" . join( ', ', $this->allowedFileType ) . "</code> type files and maximum filesize is <span class='font-montserrat font-semibold'>5MB</span>";
                 throw new Exception( " {$errorMsg}" );

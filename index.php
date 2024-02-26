@@ -1,7 +1,4 @@
-<?php include_once "./inc/templates/header.php";?>
-<?php require_once "./inc/templates/upload.php";?>
 <?php
-
 // autoload class files - className and FileName must be same
 spl_autoload_register( function ( $name ) {
     require_once "inc/{$name}.php";
@@ -14,6 +11,7 @@ try {
     // Image Uploads
     if ( isset( $_FILES['images'] ) ) {
         new FileUpload( $_FILES['images'], 'assets/img' );
+        header("Location: index.php");
     }
 
     // Delete Images
@@ -21,6 +19,7 @@ try {
         $fileName = htmlspecialchars( $_GET['name'] );
         $files    = new DeleteItem( 'assets/img' );
         $files->delete( $fileName );
+        header("Location: index.php");
     }
 
     // Display Images - return all images into an array
@@ -28,8 +27,8 @@ try {
 } catch ( Throwable $th ) {
     $errorMsg = $th->getMessage();
 }
+include_once "./inc/templates/header.php";
 ?>
-
     <!-- main gallery start -->
     <?php if ( !$errorMsg ): ?>
     <div class="container grid grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -46,8 +45,6 @@ try {
     <?php else: ?>
         <div class="container mx-auto text-center">
             <p class="mb-5"><?php echo $errorMsg; ?></p>
-            <a href="/" class="px-5 py-2 font-medium text-white capitalize transition duration-300 rounded bg-slate-700 hover:bg-slate-800 font-montserrat">Go to Homepage</a>
+            <a href="" class="px-5 py-2 font-medium text-white capitalize transition duration-300 rounded bg-slate-700 hover:bg-slate-800 font-montserrat">Go to Homepage</a>
         </div>
     <?php endif;?>
-
-<?php include_once "./inc/templates/footer.php";?>
